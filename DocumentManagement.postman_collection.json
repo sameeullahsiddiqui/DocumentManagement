@@ -1,0 +1,1093 @@
+{
+	"info": {
+		"_postman_id": "6d68abae-ccf5-4bf1-88ac-4be1abfbe4f0",
+		"name": "DocumentManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4c57d517-5a66-4498-8e7f-b9944ffb9288",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.globals.set(\"access_token\", \"bearer \"+jsonData.access_token);",
+							"    pm.expect(jsonData.token_type).to.eql(\"bearer\");",
+							"    pm.globals.set(\"base_url\", pm.request.url.getRaw().split('token')[0]);",
+							"    console.log(pm.request.url.getRaw())",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin@example.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Admin@123456",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "web",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:51568/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "51568",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetToken Live",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4c57d517-5a66-4498-8e7f-b9944ffb9288",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.globals.set(\"access_token\", \"bearer \"+jsonData.access_token);",
+							"    pm.expect(jsonData.token_type).to.eql(\"bearer\");",
+							"    pm.globals.set(\"base_url\", pm.request.url.getRaw().split('token')[0]);",
+							"    console.log(pm.request.url.getRaw())",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin@example.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Admin@123456",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "web",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://jih.eastus2.cloudapp.azure.com:9090/token",
+					"protocol": "http",
+					"host": [
+						"jih",
+						"eastus2",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"port": "9090",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{base_url}}/api/Account/Logout",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"Account",
+						"Logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RefreshToken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "904e9571a8644c098ab56b8515ed724d",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "abc132xyz",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "secret123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/token",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangePassword",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/Account/ChangePassword",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"Account",
+						"ChangePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Email\": \"sameesiddiqui@gmail.com\",\r\n  \"Password\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/Account/Register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"Account",
+						"Register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserInfo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/Account/UserInfo",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"Account",
+						"UserInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddRacks",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n   \"RackNumber\": \"Rack1\",\r\n  \"Remark\": \"PDF\"\r\n }"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/racks",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"racks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRacks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/racks/c4de0eb7-1974-4791-8909-06deeb230eff",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"racks",
+						"c4de0eb7-1974-4791-8909-06deeb230eff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateRacks",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n   \"Id\": \"4c8e27a3-0d5e-4db2-9a25-caf014264eed\",\r\n   \"RackNumber\": \"Rack1\",\r\n   \"Remark\": \"PDF document\"\r\n }"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/racks/4c8e27a3-0d5e-4db2-9a25-caf014264eed",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"racks",
+						"4c8e27a3-0d5e-4db2-9a25-caf014264eed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchRacks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/racks?pageNumber=1&pageSize=5&RackNumber=Rack1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"racks"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "RackNumber",
+							"value": "Rack1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteRack",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Photo\": \"sample string 1\",\n  \"Name\": \"Mujeeb Khan\",\n  \"ContactNumber\": \"12345678\",\n  \"AlternateNumber\": \"87654321\",\n  \"Age\": \"30\",\n  \"Qualification\": \"Graduate\",\n  \"Profession\": \"House Wife\",\n  \"MaritalStatus\": \"Married\",\n  \"Remarks\": \"*\",\n  \"Treatment\": \"\",\n  \"SupportFromOtherInst\": \"false\",\n  \"TrustName\": \"\",\n  \"RationCard\": \"AAAAA\",\n  \"Residency\": \"Rented\",\n  \"Rent\": \"12000\",\n  \"Vehicle\": \"\",\n  \"LightBillAmount\": \"500\",\n  \"Furniture\": \"AC/Freeze/TV/Cooler\",\n  \"FamilyMembers\": [\n    {\n      \"MemberName\": \"Saika Khan\",\n      \"Relation\": \"Wife\",\n      \"MaritalStatus\": \"Married\",\n      \"Qualification\": \"Graduate\",\n      \"Profession\": \"Skilled Worker\",\n      \"Remarks\": \"\",\n      \"Treatment\": \"\"\n    }\n  ],\n  \"Donations\": []\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/racks/26e9be56-000f-4ba6-9b32-5dc058b46f7e",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"racks",
+						"26e9be56-000f-4ba6-9b32-5dc058b46f7e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddRackBlocks",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"BlockNumber\": \"Block1\",\r\n  \"Remark\": \"Test Block\",\r\n  \"RackId\": \"4c8e27a3-0d5e-4db2-9a25-caf014264eed\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rackblocks",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rackblocks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRackBlocks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rackblocks/c67b1012-5abf-4f86-b66c-2ba6e9cc3a74",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rackblocks",
+						"c67b1012-5abf-4f86-b66c-2ba6e9cc3a74"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateRackBlocks",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"BlockNumber\": \"Block1 A\",\r\n  \"Remark\": \"Test Block 123\",\r\n  \"RackId\": \"4c8e27a3-0d5e-4db2-9a25-caf014264eed\",\r\n  \"Id\": \"c67b1012-5abf-4f86-b66c-2ba6e9cc3a74\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rackblocks/c67b1012-5abf-4f86-b66c-2ba6e9cc3a74",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rackblocks",
+						"c67b1012-5abf-4f86-b66c-2ba6e9cc3a74"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchRackBlocks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rackblocks?pageNumber=1&pageSize=5&RackNumber=Rack1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rackblocks"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "RackNumber",
+							"value": "Rack1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteRackBlock",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Photo\": \"sample string 1\",\n  \"Name\": \"Mujeeb Khan\",\n  \"ContactNumber\": \"12345678\",\n  \"AlternateNumber\": \"87654321\",\n  \"Age\": \"30\",\n  \"Qualification\": \"Graduate\",\n  \"Profession\": \"House Wife\",\n  \"MaritalStatus\": \"Married\",\n  \"Remarks\": \"*\",\n  \"Treatment\": \"\",\n  \"SupportFromOtherInst\": \"false\",\n  \"TrustName\": \"\",\n  \"RationCard\": \"AAAAA\",\n  \"Residency\": \"Rented\",\n  \"Rent\": \"12000\",\n  \"Vehicle\": \"\",\n  \"LightBillAmount\": \"500\",\n  \"Furniture\": \"AC/Freeze/TV/Cooler\",\n  \"FamilyMembers\": [\n    {\n      \"MemberName\": \"Saika Khan\",\n      \"Relation\": \"Wife\",\n      \"MaritalStatus\": \"Married\",\n      \"Qualification\": \"Graduate\",\n      \"Profession\": \"Skilled Worker\",\n      \"Remarks\": \"\",\n      \"Treatment\": \"\"\n    }\n  ],\n  \"Donations\": []\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rackblocks/15e376f0-cdc8-4f12-8c13-00ac9c210a9d",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rackblocks",
+						"15e376f0-cdc8-4f12-8c13-00ac9c210a9d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddDocumentTypes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"DocumentType\": \"Electricity Docs\",\r\n  \"Remark\": \"Electricity Docs\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/documenttypes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"documenttypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDocumentTypes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/documenttypes/c54d58f2-9c15-4cd8-b80e-f8a498f215d9",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"documenttypes",
+						"c54d58f2-9c15-4cd8-b80e-f8a498f215d9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateDocumentTypes",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"DocumentType\": \"Water Docs\",\r\n    \"Remark\": \"Water Docs\",\r\n    \"Id\": \"c54d58f2-9c15-4cd8-b80e-f8a498f215d9\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/documenttypes/c54d58f2-9c15-4cd8-b80e-f8a498f215d9",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"documenttypes",
+						"c54d58f2-9c15-4cd8-b80e-f8a498f215d9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchDocumentTypes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/documenttypes?pageNumber=1&pageSize=5&DocumentType=Water Docs",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"documenttypes"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "DocumentType",
+							"value": "Water Docs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteDocumentTypes",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Photo\": \"sample string 1\",\n  \"Name\": \"Mujeeb Khan\",\n  \"ContactNumber\": \"12345678\",\n  \"AlternateNumber\": \"87654321\",\n  \"Age\": \"30\",\n  \"Qualification\": \"Graduate\",\n  \"Profession\": \"House Wife\",\n  \"MaritalStatus\": \"Married\",\n  \"Remarks\": \"*\",\n  \"Treatment\": \"\",\n  \"SupportFromOtherInst\": \"false\",\n  \"TrustName\": \"\",\n  \"RationCard\": \"AAAAA\",\n  \"Residency\": \"Rented\",\n  \"Rent\": \"12000\",\n  \"Vehicle\": \"\",\n  \"LightBillAmount\": \"500\",\n  \"Furniture\": \"AC/Freeze/TV/Cooler\",\n  \"FamilyMembers\": [\n    {\n      \"MemberName\": \"Saika Khan\",\n      \"Relation\": \"Wife\",\n      \"MaritalStatus\": \"Married\",\n      \"Qualification\": \"Graduate\",\n      \"Profession\": \"Skilled Worker\",\n      \"Remarks\": \"\",\n      \"Treatment\": \"\"\n    }\n  ],\n  \"Donations\": []\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/documenttypes/15e376f0-cdc8-4f12-8c13-00ac9c210a9d",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"documenttypes",
+						"15e376f0-cdc8-4f12-8c13-00ac9c210a9d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddFileAllocation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"FileName\": \"File1\",\r\n  \"FolderName\": \"Folder1\",\r\n  \"Remark\": \"Test File\",\r\n  \"RackBlockId\": \"C67B1012-5ABF-4F86-B66C-2BA6E9CC3A74\",\r\n  \"DocumentTypeId\": \"C54D58F2-9C15-4CD8-B80E-F8A498F215D9\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/fileallocation",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"fileallocation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFileAllocation",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/fileallocation/5a939000-1c73-4683-8d32-723a38cbc1b3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"fileallocation",
+						"5a939000-1c73-4683-8d32-723a38cbc1b3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchFileAllocation",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/fileallocation?pageNumber=1&pageSize=5&DocumentType=Water Docs",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"fileallocation"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "DocumentType",
+							"value": "Water Docs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateFileAllocation",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"FileName\": \"File1 A\",\n    \"FolderName\": \"Folder1 A\",\n    \"Remark\": \"Test File A\",\n    \"RackBlockId\": \"c67b1012-5abf-4f86-b66c-2ba6e9cc3a74\",\n    \"DocumentTypeId\": \"c54d58f2-9c15-4cd8-b80e-f8a498f215d9\",\n    \"Id\": \"5a939000-1c73-4683-8d32-723a38cbc1b3\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/fileallocation/5a939000-1c73-4683-8d32-723a38cbc1b3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"fileallocation",
+						"5a939000-1c73-4683-8d32-723a38cbc1b3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteFileAllocation",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Photo\": \"sample string 1\",\n  \"Name\": \"Mujeeb Khan\",\n  \"ContactNumber\": \"12345678\",\n  \"AlternateNumber\": \"87654321\",\n  \"Age\": \"30\",\n  \"Qualification\": \"Graduate\",\n  \"Profession\": \"House Wife\",\n  \"MaritalStatus\": \"Married\",\n  \"Remarks\": \"*\",\n  \"Treatment\": \"\",\n  \"SupportFromOtherInst\": \"false\",\n  \"TrustName\": \"\",\n  \"RationCard\": \"AAAAA\",\n  \"Residency\": \"Rented\",\n  \"Rent\": \"12000\",\n  \"Vehicle\": \"\",\n  \"LightBillAmount\": \"500\",\n  \"Furniture\": \"AC/Freeze/TV/Cooler\",\n  \"FamilyMembers\": [\n    {\n      \"MemberName\": \"Saika Khan\",\n      \"Relation\": \"Wife\",\n      \"MaritalStatus\": \"Married\",\n      \"Qualification\": \"Graduate\",\n      \"Profession\": \"Skilled Worker\",\n      \"Remarks\": \"\",\n      \"Treatment\": \"\"\n    }\n  ],\n  \"Donations\": []\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/fileallocation/5a939000-1c73-4683-8d32-723a38cbc1b3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"fileallocation",
+						"5a939000-1c73-4683-8d32-723a38cbc1b3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UploadDocument",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "MyFile",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/documents/5a939000-1c73-4683-8d32-723a38cbc1b3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"documents",
+						"5a939000-1c73-4683-8d32-723a38cbc1b3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DownloadDocument",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/Documents?fileName=5a939000-1c73-4683-8d32-723a38cbc1b3.pdf",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"Documents"
+					],
+					"query": [
+						{
+							"key": "fileName",
+							"value": "5a939000-1c73-4683-8d32-723a38cbc1b3.pdf"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
