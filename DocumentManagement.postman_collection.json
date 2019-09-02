@@ -44,13 +44,13 @@
 						},
 						{
 							"key": "username",
-							"value": "admin@example.com",
+							"value": "Renowaterman",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "Admin@123456",
+							"value": "Samee@786",
 							"description": "",
 							"type": "text"
 						},
@@ -63,12 +63,12 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:51568/token",
+					"raw": "http://localhost:56466/token",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "51568",
+					"port": "56466",
 					"path": [
 						"token"
 					]
@@ -278,7 +278,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"Email\": \"sameesiddiqui@gmail.com\",\r\n  \"Password\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+					"raw": "{\r\n    \"UserName\":\"Renowaterman\",\r\n\t\"Name\":\"Reon\",\r\n\t\"Email\":\"Reon2@gmail.com\",\r\n\t\"Password\":\"Samee@786\",\r\n\t\"Activated\":\"true\"\r\n}"
 				},
 				"url": {
 					"raw": "{{base_url}}/api/Account/Register",
@@ -327,6 +327,51 @@
 			"response": []
 		},
 		{
+			"name": "SearchRacks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/racks?pageNumber=1&pageSize=5&RackNumber=Rack1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"racks"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "RackNumber",
+							"value": "Rack1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "AddRacks",
 			"request": {
 				"method": "POST",
@@ -342,7 +387,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n   \"RackNumber\": \"Rack1\",\r\n  \"Remark\": \"PDF\"\r\n }"
+					"raw": " {\r\n   \"RackNumber\": \"Rack1\",\r\n  \"Remark\": \"PDF\",\r\n   \"Description\":\"Rack1 Description\"\r\n }"
 				},
 				"url": {
 					"raw": "{{base_url}}/api/racks",
@@ -405,62 +450,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n   \"Id\": \"4c8e27a3-0d5e-4db2-9a25-caf014264eed\",\r\n   \"RackNumber\": \"Rack1\",\r\n   \"Remark\": \"PDF document\"\r\n }"
+					"raw": " {\r\n   \"Id\": \"5ce166ff-3d9f-49f5-9d8f-1339aa127170\",\r\n   \"RackNumber\": \"Rack1\",\r\n   \"Remark\": \"PDF document\"\r\n }"
 				},
 				"url": {
-					"raw": "{{base_url}}/api/racks/4c8e27a3-0d5e-4db2-9a25-caf014264eed",
+					"raw": "{{base_url}}/api/racks/5ce166ff-3d9f-49f5-9d8f-1339aa127170",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
 						"racks",
-						"4c8e27a3-0d5e-4db2-9a25-caf014264eed"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "SearchRacks",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{access_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/api/racks?pageNumber=1&pageSize=5&RackNumber=Rack1",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"api",
-						"racks"
-					],
-					"query": [
-						{
-							"key": "pageNumber",
-							"value": "1"
-						},
-						{
-							"key": "pageSize",
-							"value": "5"
-						},
-						{
-							"key": "RackNumber",
-							"value": "Rack1"
-						}
+						"5ce166ff-3d9f-49f5-9d8f-1339aa127170"
 					]
 				}
 			},
@@ -514,7 +514,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"BlockNumber\": \"Block1\",\r\n  \"Remark\": \"Test Block\",\r\n  \"RackId\": \"4c8e27a3-0d5e-4db2-9a25-caf014264eed\"\r\n}"
+					"raw": "{\r\n  \"BlockNumber\": \"Block1\",\r\n  \"Remark\": \"Test Block\",\r\n  \"RackId\": \"3b4ad0fe-795c-4806-9373-097e1e2184eb\",\r\n  \"Description\":\"Block1 Description\"\r\n}"
 				},
 				"url": {
 					"raw": "{{base_url}}/api/rackblocks",
@@ -672,6 +672,21 @@
 		},
 		{
 			"name": "AddDocumentTypes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a274a7c9-4067-450e-8a53-6e45131b7761",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.globals.set(\"documenttypes_id\", jsonData.id);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -686,7 +701,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"DocumentType\": \"Electricity Docs\",\r\n  \"Remark\": \"Electricity Docs\"\r\n}"
+					"raw": "{\r\n  \"DocumentType\": \"Electricity Docs\",\r\n  \"Remark\": \"Electricity Docs\",\r\n  \"Description\":\"DocumentType Description\"\r\n}"
 				},
 				"url": {
 					"raw": "{{base_url}}/api/documenttypes",
@@ -749,17 +764,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"DocumentType\": \"Water Docs\",\r\n    \"Remark\": \"Water Docs\",\r\n    \"Id\": \"c54d58f2-9c15-4cd8-b80e-f8a498f215d9\"\r\n}"
+					"raw": "{\r\n    \"DocumentTypeName\": \"Water Docs\",\r\n    \"Remark\": \"Water Docs123\",\r\n    \"Id\": \"260c3103-fc49-43bd-9dec-c620b24e1fd5\"\r\n}"
 				},
 				"url": {
-					"raw": "{{base_url}}/api/documenttypes/c54d58f2-9c15-4cd8-b80e-f8a498f215d9",
+					"raw": "{{base_url}}/api/documenttypes/{{documenttypes_id}}",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
 						"documenttypes",
-						"c54d58f2-9c15-4cd8-b80e-f8a498f215d9"
+						"{{documenttypes_id}}"
 					]
 				}
 			},
@@ -767,6 +782,21 @@
 		},
 		{
 			"name": "SearchDocumentTypes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "31d86120-5859-48e8-91bf-c3f6810b760a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.globals.set(\"documenttypes_id\", jsonData[0].id);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -784,27 +814,13 @@
 					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
 				},
 				"url": {
-					"raw": "{{base_url}}/api/documenttypes?pageNumber=1&pageSize=5&DocumentType=Water Docs",
+					"raw": "{{base_url}}/api/documenttypes",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
 						"documenttypes"
-					],
-					"query": [
-						{
-							"key": "pageNumber",
-							"value": "1"
-						},
-						{
-							"key": "pageSize",
-							"value": "5"
-						},
-						{
-							"key": "DocumentType",
-							"value": "Water Docs"
-						}
 					]
 				}
 			},
@@ -829,14 +845,14 @@
 					"raw": "{\n  \"Photo\": \"sample string 1\",\n  \"Name\": \"Mujeeb Khan\",\n  \"ContactNumber\": \"12345678\",\n  \"AlternateNumber\": \"87654321\",\n  \"Age\": \"30\",\n  \"Qualification\": \"Graduate\",\n  \"Profession\": \"House Wife\",\n  \"MaritalStatus\": \"Married\",\n  \"Remarks\": \"*\",\n  \"Treatment\": \"\",\n  \"SupportFromOtherInst\": \"false\",\n  \"TrustName\": \"\",\n  \"RationCard\": \"AAAAA\",\n  \"Residency\": \"Rented\",\n  \"Rent\": \"12000\",\n  \"Vehicle\": \"\",\n  \"LightBillAmount\": \"500\",\n  \"Furniture\": \"AC/Freeze/TV/Cooler\",\n  \"FamilyMembers\": [\n    {\n      \"MemberName\": \"Saika Khan\",\n      \"Relation\": \"Wife\",\n      \"MaritalStatus\": \"Married\",\n      \"Qualification\": \"Graduate\",\n      \"Profession\": \"Skilled Worker\",\n      \"Remarks\": \"\",\n      \"Treatment\": \"\"\n    }\n  ],\n  \"Donations\": []\n}"
 				},
 				"url": {
-					"raw": "{{base_url}}/api/documenttypes/15e376f0-cdc8-4f12-8c13-00ac9c210a9d",
+					"raw": "{{base_url}}/api/documenttypes/{{documenttypes_id}}",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
 						"documenttypes",
-						"15e376f0-cdc8-4f12-8c13-00ac9c210a9d"
+						"{{documenttypes_id}}"
 					]
 				}
 			},
@@ -858,7 +874,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"FileName\": \"File1\",\r\n  \"FolderName\": \"Folder1\",\r\n  \"Remark\": \"Test File\",\r\n  \"RackBlockId\": \"C67B1012-5ABF-4F86-B66C-2BA6E9CC3A74\",\r\n  \"DocumentTypeId\": \"C54D58F2-9C15-4CD8-B80E-F8A498F215D9\"\r\n}"
+					"raw": "{\r\n  \"FileName\": \"File1\",\r\n  \"FolderName\": \"Folder1\",\r\n  \"Remark\": \"Test File\",\r\n  \"RackBlockId\": \"b1533139-fa69-49eb-8ad2-1babb8ad1aec\",\r\n  \"DocumentTypeId\": \"a306e4c9-b264-4caa-9646-99e42c0b3820\",\r\n  \"Description\":\"File1 Description\"\r\n}"
 				},
 				"url": {
 					"raw": "{{base_url}}/api/fileallocation",
@@ -1039,14 +1055,14 @@
 					]
 				},
 				"url": {
-					"raw": "{{base_url}}/api/documents/5a939000-1c73-4683-8d32-723a38cbc1b3",
+					"raw": "{{base_url}}/api/documents/02b27b0c-c412-4e34-9c8f-03c762de6364",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
 						"documents",
-						"5a939000-1c73-4683-8d32-723a38cbc1b3"
+						"02b27b0c-c412-4e34-9c8f-03c762de6364"
 					]
 				}
 			},
@@ -1071,7 +1087,7 @@
 					"raw": "{\r\n  \"OldPassword\": \"Supercop@787\",\r\n  \"NewPassword\": \"Supercop@786\",\r\n  \"ConfirmPassword\": \"Supercop@786\"\r\n}"
 				},
 				"url": {
-					"raw": "{{base_url}}/api/Documents?fileName=5a939000-1c73-4683-8d32-723a38cbc1b3.pdf",
+					"raw": "{{base_url}}/api/Documents?fileName=02b27b0c-c412-4e34-9c8f-03c762de6364.txt",
 					"host": [
 						"{{base_url}}"
 					],
@@ -1082,7 +1098,7 @@
 					"query": [
 						{
 							"key": "fileName",
-							"value": "5a939000-1c73-4683-8d32-723a38cbc1b3.pdf"
+							"value": "02b27b0c-c412-4e34-9c8f-03c762de6364.txt"
 						}
 					]
 				}
