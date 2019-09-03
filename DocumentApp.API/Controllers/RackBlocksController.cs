@@ -29,14 +29,13 @@ namespace RackBlockMastersManagement.API.Controllers
         }
 
         // GET: api/RackBlockMaster
-        public async Task<IHttpActionResult> GetRackBlockMasterAsync([FromUri] RackPagingViewModel pagingmodel)
+        public IHttpActionResult GetRackBlockMaster([FromUri] RackPagingViewModel pagingmodel)
         {
-            var rackBlock = await _rackBlockMasterService.GetAllAsync();
-            IQueryable<RackBlockMaster> source = rackBlock.AsQueryable();
+            IQueryable<RackBlockMaster> source = _rackBlockMasterService.GetAllQuerableAsync();
 
             int currentPage = 1;
             int pageSize = 5;
-
+            int count = 0;
             if (pagingmodel != null && pagingmodel.PageSize > 0)
             {
                 currentPage = pagingmodel.pageNumber;
@@ -51,39 +50,44 @@ namespace RackBlockMastersManagement.API.Controllers
                 {
                     source = source.Where(a => a.Rack.RackNumber == pagingmodel.RackNumber);
                 }
-            }else
+
+                count = source.Count();
+            }
+            else
             {
                 pageSize = source.Count();
+                count = pageSize;
             }
 
-                int count = source.Count();
-                int totalCount = count;
-                int totalPages = (int)Math.Ceiling(count / (double)pageSize);
-                var previousPage = currentPage > 1 ? "Yes" : "No";
-                var nextPage = currentPage < totalPages ? "Yes" : "No";
-                var paginationMetadata = new { totalCount, pageSize, currentPage, totalPages, previousPage, nextPage };
+            int totalCount = count;
+            int totalPages = (int)Math.Ceiling(count / (double)pageSize);
+            var previousPage = currentPage > 1 ? "Yes" : "No";
+            var nextPage = currentPage < totalPages ? "Yes" : "No";
+            var paginationMetadata = new { totalCount, pageSize, currentPage, totalPages, previousPage, nextPage };
 
-                var items = source.OrderBy(x => x.BlockNumber).Skip((currentPage - 1) * pageSize).Take(pageSize)
-                                  .Select(x => new RackBlockMasterDto {
-                                                                        Id = x.Id,
-                                                                        BlockNumber = x.BlockNumber,
-                                                                        RackNumber = x.Rack.RackNumber,
-                                                                        Remark = x.Remark,
-                                                                        RackId = x.RackId,
-                                                                        Description=  x.Description }).ToList();
+            var items = source.OrderBy(x => x.BlockNumber).Skip((currentPage - 1) * pageSize).Take(pageSize)
+                              .Select(x => new RackBlockMasterDto
+                              {
+                                  Id = x.Id,
+                                  BlockNumber = x.BlockNumber,
+                                  RackNumber = x.Rack.RackNumber,
+                                  Remark = x.Remark,
+                                  RackId = x.RackId,
+                                  Description = x.Description
+                              }).ToList();
 
 
-                if (HttpContext.Current != null)
-                    HttpContext.Current.Response.Headers.Add("Paging-Headers", JsonConvert.SerializeObject(paginationMetadata));
-                return Ok(items);
-            
+            if (HttpContext.Current != null)
+                HttpContext.Current.Response.Headers.Add("Paging-Headers", JsonConvert.SerializeObject(paginationMetadata));
+            return Ok(items);
+
         }
 
         // GET: api/RackBlockMaster/5
         [ResponseType(typeof(RackBlockMaster))]
-        public async Task<IHttpActionResult> GetRackAsync(Guid id)
+        public IHttpActionResult GetRackAsync(Guid id)
         {
-            var rackBlockMaster = await _rackBlockMasterService.GetByIdAsync(id);
+            var rackBlockMaster = _rackBlockMasterService.GetByIdQuerableAsync(id).Include(x=>x.Rack).FirstOrDefault();
             if (rackBlockMaster == null)
             {
                 return NotFound();

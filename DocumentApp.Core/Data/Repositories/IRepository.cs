@@ -11,6 +11,8 @@ namespace DocumentApp.Core.Data.Repositories
     {
         Task<List<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(Guid id);
+        IQueryable<TEntity> GetAllQuerableAsync();
+        IQueryable<TEntity> GetByIdQuerableAsync(Guid id);
         TEntity Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

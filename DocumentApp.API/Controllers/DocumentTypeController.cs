@@ -31,13 +31,13 @@ namespace DocumentApp.API.Controllers
 
         [Route]
         [HttpGet]
-        public async Task<IHttpActionResult> GetDocumentTypes([FromUri] DocumentsTypePagingViewModel pagingmodel)
+        public IHttpActionResult GetDocumentTypes([FromUri] DocumentsTypePagingViewModel pagingmodel)
         {
-            List<DocumentType> documentTypes = await _documentTypeService.GetAllAsync();
-            IQueryable<DocumentType> source = documentTypes.AsQueryable();
+            IQueryable<DocumentType> source = _documentTypeService.GetAllQuerableAsync();
 
             int currentPage = 1;
             int pageSize = 5;
+            int count = 0;
 
             if (pagingmodel != null && pagingmodel.PageSize > 0)
             {
@@ -48,14 +48,14 @@ namespace DocumentApp.API.Controllers
 
                 currentPage = pagingmodel.PageNumber;
                 pageSize = pagingmodel.PageSize == -1 ? source.Count() : pagingmodel.PageSize;
+                count = source.Count();
             }
             else
             {
                 pageSize = source.Count();
+                count = pageSize;
             }
 
-
-            int count = source.Count();
             int totalCount = count;
             int totalPages = (int)Math.Ceiling(count / (double)pageSize);
             var previousPage = currentPage > 1 ? "Yes" : "No";
@@ -72,9 +72,9 @@ namespace DocumentApp.API.Controllers
         }
 
         [Route("{id:Guid}")]
-        public async Task<IHttpActionResult> GetDocumentType(Guid id)
+        public IHttpActionResult GetDocumentType(Guid id)
         {
-            DocumentType documentType = await _documentTypeService.GetByIdAsync(id);
+            var documentType = _documentTypeService.GetByIdQuerableAsync(id).FirstOrDefault();
             if (documentType == null)
             {
                 return NotFound();

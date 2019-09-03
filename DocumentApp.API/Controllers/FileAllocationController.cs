@@ -32,13 +32,13 @@ namespace DocumentManagement.API.Controllers
         }
 
         // GET: api/FileAllocations
-        public async Task<IHttpActionResult> GetFileAllocationsAsync([FromUri] RackPagingViewModel pagingmodel)
+        public IHttpActionResult GetFileAllocations([FromUri] RackPagingViewModel pagingmodel)
         {
-            var fileAllocation = await _fileAllocationService.GetAllAsync();
-            IQueryable<FileAllocation> source = fileAllocation.AsQueryable();
+            IQueryable<FileAllocation> source = _fileAllocationService.GetAllQuerableAsync();
 
             int currentPage = 1;
             int pageSize = 5;
+            int count = 0;
 
             if (pagingmodel != null && pagingmodel.PageSize > 0)
             {
@@ -64,14 +64,16 @@ namespace DocumentManagement.API.Controllers
 
                 currentPage = pagingmodel.PageNumber;
                 pageSize = pagingmodel.PageSize == -1 ? source.Count() : pagingmodel.PageSize;
+                count = source.Count();
             }
             else
             {
                 pageSize = source.Count();
+                count = pageSize;
             }
 
 
-            int count = source.Count();
+            
             int totalCount = count;
             int totalPages = (int)Math.Ceiling(count / (double)pageSize);
             var previousPage = currentPage > 1 ? "Yes" : "No";
@@ -79,7 +81,8 @@ namespace DocumentManagement.API.Controllers
             var paginationMetadata = new { totalCount, pageSize, currentPage, totalPages, previousPage, nextPage };
 
             var items = source.OrderBy(x => x.FileName).Skip((currentPage - 1) * pageSize).Take(pageSize)
-                              .Select(x => new {
+                              .Select(x => new
+                              {
                                   Id = x.Id,
                                   FileName = x.FileName,
                                   FolderName = x.FolderName,
@@ -101,27 +104,28 @@ namespace DocumentManagement.API.Controllers
 
         // GET: api/FileAllocations/5
         [ResponseType(typeof(FileAllocation))]
-        public async Task<IHttpActionResult> GetFileAllocationAsync(Guid id)
+        public IHttpActionResult GetFileAllocation(Guid id)
         {
-            var fileAllocation = await _fileAllocationService.GetByIdAsync(id);
+            var fileAllocation = _fileAllocationService.GetByIdQuerableAsync(id).Include(x => x.RackBlock).Include(x => x.RackBlock.Rack).Include(x => x.DocumentType).FirstOrDefault();
             if (fileAllocation == null)
             {
                 return NotFound();
             }
 
-            var fileAllocationDto = new {
-                                 Id = fileAllocation.Id,
-                                 FileName = fileAllocation.FileName,
-                                 FolderName = fileAllocation.FolderName,
-                                 BlockNumber = fileAllocation.RackBlock.BlockNumber,
-                                 RackBlockId = fileAllocation.RackBlockId,
-                                 RackId = fileAllocation.RackBlock.RackId,
-                                 RackNumber = fileAllocation.RackBlock.Rack.RackNumber,
-                                 DocumentTypeId = fileAllocation.DocumentTypeId,
-                                 DocumentType = fileAllocation.DocumentType.DocumentTypeName,
-                                 Remark = fileAllocation.Remark,
-                                 Description = fileAllocation.Description
-                             };
+            var fileAllocationDto = new
+            {
+                Id = fileAllocation.Id,
+                FileName = fileAllocation.FileName,
+                FolderName = fileAllocation.FolderName,
+                BlockNumber = fileAllocation.RackBlock.BlockNumber,
+                RackBlockId = fileAllocation.RackBlockId,
+                RackId = fileAllocation.RackBlock.RackId,
+                RackNumber = fileAllocation.RackBlock.Rack.RackNumber,
+                DocumentTypeId = fileAllocation.DocumentTypeId,
+                DocumentType = fileAllocation.DocumentType.DocumentTypeName,
+                Remark = fileAllocation.Remark,
+                Description = fileAllocation.Description
+            };
 
             return Ok(fileAllocationDto);
         }

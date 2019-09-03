@@ -6,19 +6,158 @@
 	},
 	"item": [
 		{
+			"name": "Set Live Url",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f8c1281-3e47-417d-9982-0d7432b03194",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    pm.globals.set(\"base_url\", \"http://jih.eastus2.cloudapp.azure.com:9090\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin@example.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Admin@123456",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "web",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://jih.eastus2.cloudapp.azure.com:9090/api/Account/UserInfo",
+					"protocol": "http",
+					"host": [
+						"jih",
+						"eastus2",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"Account",
+						"UserInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Local Url",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "03d73f4e-48bb-4799-ae91-4dde60261a14",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    pm.globals.set(\"base_url\", \"https://localhost:44357\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin@example.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Admin@123456",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "web",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:44357/token",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44357",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GetToken",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "4c57d517-5a66-4498-8e7f-b9944ffb9288",
+						"id": "c93398a5-8f5e-4ae8-8165-d12a0ca91a8d",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Your test name\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.globals.set(\"access_token\", \"bearer \"+jsonData.access_token);",
 							"    pm.expect(jsonData.token_type).to.eql(\"bearer\");",
-							"    pm.globals.set(\"base_url\", pm.request.url.getRaw().split('token')[0]);",
 							"    console.log(pm.request.url.getRaw())",
 							"});"
 						]
@@ -63,87 +202,10 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:56466/token",
-					"protocol": "http",
+					"raw": "{{base_url}}/token",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "56466",
-					"path": [
-						"token"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetToken Live",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "4c57d517-5a66-4498-8e7f-b9944ffb9288",
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Your test name\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.globals.set(\"access_token\", \"bearer \"+jsonData.access_token);",
-							"    pm.expect(jsonData.token_type).to.eql(\"bearer\");",
-							"    pm.globals.set(\"base_url\", pm.request.url.getRaw().split('token')[0]);",
-							"    console.log(pm.request.url.getRaw())",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "grant_type",
-							"value": "password",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "admin@example.com",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "Admin@123456",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "client_id",
-							"value": "web",
-							"description": "",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://jih.eastus2.cloudapp.azure.com:9090/token",
-					"protocol": "http",
-					"host": [
-						"jih",
-						"eastus2",
-						"cloudapp",
-						"azure",
-						"com"
-					],
-					"port": "9090",
 					"path": [
 						"token"
 					]

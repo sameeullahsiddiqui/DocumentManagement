@@ -3,6 +3,7 @@ using DocumentApp.Core.Entities.Foundation;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DocumentApp.Data.Repositories
@@ -28,6 +29,17 @@ namespace DocumentApp.Data.Repositories
         {
             return await _dbEntitySet.FirstOrDefaultAsync(t => t.Id == id);
         }
+
+        public IQueryable<TEntity> GetAllQuerableAsync()
+        {
+            return _dbEntitySet;
+        }
+
+        public IQueryable<TEntity> GetByIdQuerableAsync(Guid id)
+        {
+            return _dbEntitySet.Where(t => t.Id == id);
+        }
+
 
         public TEntity Add(TEntity entity)
         {
@@ -60,5 +72,6 @@ namespace DocumentApp.Data.Repositories
             }
             _disposed = true;
         }
+
     }
 }

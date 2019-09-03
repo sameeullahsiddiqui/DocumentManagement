@@ -73,5 +73,14 @@ namespace DocumentApp.Services.Services
             _disposed = true;
         }
 
+        public IQueryable<TEntity> GetAllQuerableAsync()
+        {
+            return _repository.GetAllQuerableAsync();
+        }
+
+        public IQueryable<TEntity> GetByIdQuerableAsync(Guid id)
+        {
+            return _repository.GetByIdQuerableAsync(id);
+        }
     }
 }
