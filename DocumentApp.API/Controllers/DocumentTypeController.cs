@@ -39,7 +39,7 @@ namespace DocumentApp.API.Controllers
             int currentPage = 1;
             int pageSize = 5;
 
-            if (pagingmodel != null)
+            if (pagingmodel != null && pagingmodel.PageSize > 0)
             {
                 if (!string.IsNullOrEmpty(pagingmodel.DocumentTypeName))
                 {
