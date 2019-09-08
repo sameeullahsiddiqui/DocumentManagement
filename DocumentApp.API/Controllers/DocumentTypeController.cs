@@ -3,15 +3,14 @@ using DocumentApp.API.Models;
 using DocumentApp.Core.Entities;
 using DocumentApp.Core.Services;
 using DocumentApp.Dto.Dtos;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Threading.Tasks;
-using System.Web.Http;
 using Newtonsoft.Json;
-using System.Web;
+using System;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace DocumentApp.API.Controllers
 {
@@ -62,8 +61,17 @@ namespace DocumentApp.API.Controllers
             var nextPage = currentPage < totalPages ? "Yes" : "No";
             var paginationMetadata = new { totalCount, pageSize, currentPage, totalPages, previousPage, nextPage };
 
-            var items = source.OrderBy(x => x.DocumentTypeName).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-            var documentTypeDtos = _mapper.Map<List<DocumentType>, List<DocumentTypeDto>>(items);
+            var documentTypeDtos = source.OrderBy(x => x.DocumentTypeName).Skip((currentPage - 1) * pageSize).Take(pageSize)
+                             .Select(x => new DocumentTypeDto
+                             {
+                                 Id = x.Id,
+                                 CreatedBy=x.CreatedBy,
+                                 CreatedDate=x.CreatedDate,
+                                 DocumentType = x.DocumentTypeName,
+                                 Remark = x.Remark,
+                                 Description = x.Description,
+                             }).ToList();
+
 
             if (HttpContext.Current != null)
                 HttpContext.Current.Response.Headers.Add("Paging-Headers", JsonConvert.SerializeObject(paginationMetadata));
@@ -80,7 +88,17 @@ namespace DocumentApp.API.Controllers
                 return NotFound();
             }
 
-            DocumentTypeDto documentTypeDto = _mapper.Map<DocumentType, DocumentTypeDto>(documentType);
+            //DocumentTypeDto documentTypeDto = _mapper.Map<DocumentType, DocumentTypeDto>(documentType);
+            DocumentTypeDto documentTypeDto = new DocumentTypeDto
+            {
+                Id = documentType.Id,
+                CreatedBy = documentType.CreatedBy,
+                CreatedDate = documentType.CreatedDate,
+                DocumentType = documentType.DocumentTypeName,
+                Remark = documentType.Remark,
+                Description = documentType.Description,
+            };
+
 
             return Ok(documentTypeDto);
         }
@@ -101,7 +119,11 @@ namespace DocumentApp.API.Controllers
 
                 if (documentType != null)
                 {
-                    documentType = _mapper.Map(documentTypeDto, documentType);
+
+                    documentType.DocumentTypeName = documentTypeDto.DocumentType;
+                    documentType.Remark = documentTypeDto.Remark;
+                    documentType.Description = documentTypeDto.Description;
+
 
                     _documentTypeService.Update(documentType);
                     await _documentTypeService.CommitAsync();
@@ -134,12 +156,30 @@ namespace DocumentApp.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            DocumentType documentType = _mapper.Map<DocumentTypeDto, DocumentType>(documentTypeDto);
+            //DocumentType documentType = _mapper.Map<DocumentTypeDto, DocumentType>(documentTypeDto);
+
+            var documentType = new DocumentType
+            {
+                DocumentTypeName = documentTypeDto.DocumentType,
+                Remark = documentTypeDto.Remark,
+                Description = documentTypeDto.Description,
+            };
+
 
             documentType = _documentTypeService.Add(documentType);
             await _documentTypeService.CommitAsync();
 
-            documentTypeDto = _mapper.Map(documentType, documentTypeDto);
+            //documentTypeDto = _mapper.Map(documentType, documentTypeDto);
+
+            documentTypeDto = new DocumentTypeDto
+            {
+                Id = documentType.Id,
+                CreatedBy = documentType.CreatedBy,
+                CreatedDate = documentType.CreatedDate,
+                DocumentType = documentType.DocumentTypeName,
+                Remark = documentType.Remark,
+                Description = documentType.Description,
+            };
 
             return Ok(documentTypeDto);
         }

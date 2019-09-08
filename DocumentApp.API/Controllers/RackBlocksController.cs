@@ -1,19 +1,17 @@
-﻿using System;
+﻿using DocumentApp.API.Models;
+using DocumentApp.Core.Entities;
+using DocumentApp.Core.Services;
+using DocumentApp.Dto.Dtos;
+using Newtonsoft.Json;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Newtonsoft.Json;
-using DocumentApp.Core.Services;
-using DocumentApp.Core.Data;
-using DocumentApp.Core.Entities;
-using DocumentApp.API.Models;
-using DocumentApp.Dto.Dtos;
 
 namespace RackBlockMastersManagement.API.Controllers
 {
@@ -129,7 +127,7 @@ namespace RackBlockMastersManagement.API.Controllers
                     throw;
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
         // POST: api/RackBlockMaster

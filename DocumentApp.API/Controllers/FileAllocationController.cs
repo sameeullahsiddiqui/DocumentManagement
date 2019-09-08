@@ -1,19 +1,17 @@
-﻿using System;
+﻿using AutoMapper;
+using DocumentApp.API.Models;
+using DocumentApp.Core.Entities;
+using DocumentApp.Core.Services;
+using Newtonsoft.Json;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Newtonsoft.Json;
-using DocumentApp.API.Models;
-using DocumentApp.Core.Entities;
-using DocumentApp.Core.Data;
-using DocumentApp.Core.Services;
-using AutoMapper;
 
 namespace DocumentManagement.API.Controllers
 {
@@ -85,6 +83,7 @@ namespace DocumentManagement.API.Controllers
                               {
                                   Id = x.Id,
                                   FileName = x.FileName,
+                                  DocumentFileName = x.DocumentFileName,
                                   FolderName = x.FolderName,
                                   BlockNumber = x.RackBlock.BlockNumber,
                                   RackBlockId = x.RackBlockId,
@@ -93,7 +92,8 @@ namespace DocumentManagement.API.Controllers
                                   DocumentTypeId = x.DocumentTypeId,
                                   DocumentType = x.DocumentType.DocumentTypeName,
                                   Remark = x.Remark,
-                                  Description = x.Description
+                                  Description = x.Description,
+                                    
                               }).ToList();
 
             if (HttpContext.Current != null)
@@ -124,7 +124,8 @@ namespace DocumentManagement.API.Controllers
                 DocumentTypeId = fileAllocation.DocumentTypeId,
                 DocumentType = fileAllocation.DocumentType.DocumentTypeName,
                 Remark = fileAllocation.Remark,
-                Description = fileAllocation.Description
+                Description = fileAllocation.Description,
+                DocumentFileName = fileAllocation.DocumentFileName
             };
 
             return Ok(fileAllocationDto);
@@ -153,7 +154,7 @@ namespace DocumentManagement.API.Controllers
                     throw;
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
         // POST: api/FileAllocations

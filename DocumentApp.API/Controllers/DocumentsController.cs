@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DocumentApp.API.Results;
+﻿using DocumentApp.API.Results;
 using DocumentApp.Core.Services;
 using System;
 using System.IO;
@@ -13,11 +12,11 @@ namespace DocumentManagement.API.Controllers
     [RoutePrefix("api/Documents")]
     public class DocumentsController : ApiController
     {
-        private readonly IDocumentTypeService _documentTypeService;
+        private readonly IFileAllocationService _fileAllocationService;
 
-        public DocumentsController(IDocumentTypeService documentTypeService)
+        public DocumentsController(IFileAllocationService fileAllocationService)
         {
-            _documentTypeService = documentTypeService;
+            _fileAllocationService = fileAllocationService;
         }
 
 
@@ -40,14 +39,14 @@ namespace DocumentManagement.API.Controllers
                     postedFile.SaveAs(filePath);
                 }
 
-                var documentType = await _documentTypeService.GetByIdAsync(fileAllocationId);
+                var fileAllocation = await _fileAllocationService.GetByIdAsync(fileAllocationId);
 
-                if (documentType != null)
+                if (fileAllocation != null)
                 {
-                    documentType.FileName = fileName;
+                    fileAllocation.DocumentFileName = fileName;
 
-                    _documentTypeService.Update(documentType);
-                    await _documentTypeService.CommitAsync();
+                    _fileAllocationService.Update(fileAllocation);
+                    await _fileAllocationService.CommitAsync();
                 }
             }
             else
@@ -67,7 +66,7 @@ namespace DocumentManagement.API.Controllers
 
         private bool DocumentTypeExists(Guid id)
         {
-            return _documentTypeService.GetByIdAsync(id) != null;
+            return _fileAllocationService.GetByIdAsync(id) != null;
         }
     }
 
